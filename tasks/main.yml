@@ -11,4 +11,8 @@
   set_fact:
     icinga2_can_install_agent: False
   when: icinga2_can_install_agent is undefined
+
+- name: Include tasks for Icinga2 agent installation
+  include_tasks: icinga2_agent_install.yml
+  when: icinga2_can_install_agent
 ...

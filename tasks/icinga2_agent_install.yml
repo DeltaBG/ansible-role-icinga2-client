@@ -1,0 +1,37 @@
+---
+- name: Import Icinga2 repo key (RHEL)
+  rpm_key:
+    key: "{{ icinga2_repo_key }}"
+    state: present
+  when: "ansible_os_family == 'RedHat'"
+
+- name: Install Icinga2 repo (RHEL)
+  package:
+    name: "{{ icinga2_repo }}"
+    state: present
+  when: "ansible_os_family == 'RedHat'"
+
+- name: Import Icinga2 repo key (Debian, Ubuntu)
+  apt_key:
+    url: "{{ icinga2_repo_key }}"
+    state: present
+  when: "ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'"
+
+- name: Install Icinga2 repo (Debian, Ubuntu)
+  apt_repository:
+    repo: "{{ icinga2_repo }}"
+    state: present
+  when: "ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'"
+
+- name: Install Icinga2 packages
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ icinga2_packages }}"
+
+- name: Enable and start Icinga2 service
+  service:
+    name: icinga2
+    enabled: yes
+    state: started
+...
