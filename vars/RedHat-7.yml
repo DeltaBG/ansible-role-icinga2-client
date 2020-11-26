@@ -1,3 +1,4 @@
 ---
 icinga2_can_install_agent: True
+icinga2_repo: https://packages.icinga.com/epel/icinga-rpm-release-7-latest.noarch.rpm
 ...
