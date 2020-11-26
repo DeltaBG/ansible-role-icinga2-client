@@ -1,0 +1,31 @@
+---
+- name: Set Icinga2 master host in /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ icinga2_master_host_address }}  {{ icinga2_master_host }}"
+
+- name: Generate Icinga2 client key
+  command: "icinga2 pki new-cert --cn {{ inventory_hostname }} --key /var/lib/icinga2/certs/{{ inventory_hostname }}.key --cert /var/lib/icinga2/certs/{{ inventory_hostname }}.crt"
+
+- name: Generate Icinga2 TicketSalt from the master host
+  uri:
+    url: 'https://{{ icinga2_master_host }}:{{ icinga2_master_api_port }}/v1/actions/generate-ticket'
+    method: POST
+    headers:
+      Accept: "application/json"
+    return_content: yes
+    status_code: 200
+    validate_certs: no
+    force_basic_auth: yes
+    user: '{{ icinga2_api_user }}'
+    password: '{{ icinga2_api_pass }}'
+    body_format: json
+    body: '{ "cn": "{{ inventory_hostname }}" }'
+  register: icinga2_api_response
+
+- name: Save the Icinga2 TicketSalt
+  command: "icinga2 pki save-cert --key /var/lib/icinga2/certs/{{ inventory_hostname }}.key --cert /var/lib/icinga2/certs/{{ inventory_hostname }}.crt --trustedcert /var/lib/icinga2/certs/trusted-parent.crt --host {{ icinga2_master_host }}"
+
+- name: Register the Icinga2 client with the TicketSalt
+  command: "icinga2 node setup --ticket {{ icinga2_api_response.json.results[0]['ticket'] }} --cn {{ inventory_hostname }} --endpoint {{ icinga2_master_host }} --zone {{ inventory_hostname }} --parent_zone master --parent_host {{ icinga2_master_host }} --trustedcert /var/lib/icinga2/certs/trusted-parent.crt --accept-commands --accept-config --disable-confd"
+...

@@ -1,4 +1,5 @@
 ---
+icinga2_install_path: /etc/icinga2
 icinga2_repo_key: https://packages.icinga.com/icinga.key
 icinga2_packages:
   - icinga2
