@@ -1,0 +1,3 @@
+---
+icinga2_can_install_agent: True
+...

@@ -1,0 +1,14 @@
+---
+- name: Include distribution dependent variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Set facts when Icinga agent cannot be installed
+  set_fact:
+    icinga2_can_install_agent: False
+  when: icinga2_can_install_agent is undefined
+...
