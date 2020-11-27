@@ -23,6 +23,12 @@
     state: present
   when: "ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'"
 
+- name: Install Debian 9 specific backports repo
+  apt_repository:
+    repo: deb http://ftp.debian.org/debian stretch-backports main
+    state: present
+  when: "ansible_os_family == 'Debian' and ansible_distribution_major_version == '9'"
+
 - name: Install Icinga2 packages
   package:
     name: "{{ item }}"

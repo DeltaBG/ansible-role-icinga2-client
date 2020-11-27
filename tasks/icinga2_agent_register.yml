@@ -5,6 +5,14 @@
     line: "{{ icinga2_master_host_address }}  {{ icinga2_master_host }}"
   notify: restart icinga
 
+- name: Ensure /var/lib/icinga2/certs/ is present (Debian specific)
+  file:
+    path: /var/lib/icinga2/certs/
+    state: directory
+    owner: nagios
+    group: nagios
+  when: "ansible_os_family == 'Debian'"
+
 - name: Generate Icinga2 client key
   command: "icinga2 pki new-cert --cn {{ inventory_hostname }} --key /var/lib/icinga2/certs/{{ inventory_hostname }}.key --cert /var/lib/icinga2/certs/{{ inventory_hostname }}.crt"
   notify: restart icinga
