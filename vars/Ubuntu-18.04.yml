@@ -1,4 +1,7 @@
 ---
 icinga2_can_install_agent: True
 icinga2_repo: deb http://packages.icinga.com/ubuntu icinga-bionic main
+
+icinga2_nagios_plugins_packages:
+  - monitoring-plugins-basic
 ...

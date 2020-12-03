@@ -44,4 +44,7 @@
     state: touch
     mode: 000
   when: not icinga2_agent_installed
+
+- name: Include tasks for Icinga2 agent registering
+  include_tasks: icinga2_nagios_plugins.yml
 ...

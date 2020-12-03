@@ -1,0 +1,33 @@
+---
+- name: Enable PowerTools repo
+  shell: dnf config-manager --set-enabled PowerTools
+  when: >
+    ansible_os_family == "RedHat" and
+    ansible_distribution_major_version == "8"
+  changed_when: False
+
+- name: Install Nagios plugins (RedHat)
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ icinga2_nagios_plugins_packages }}"
+  when: >
+    ansible_os_family == "RedHat"
+
+- name: Install Nagios plugins (RedHat)
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ icinga2_nagios_plugins_packages }}"
+  when: >
+    ansible_os_family == "RedHat"
+
+- name: Install Nagios plugins (Debian)
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ icinga2_nagios_plugins_packages }}"
+  when: >
+    ansible_os_family == "Debian" or
+    ansible_os_family == "Ubuntu"
+...
