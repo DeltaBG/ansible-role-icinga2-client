@@ -5,6 +5,8 @@
     ansible_os_family == "RedHat" and
     ansible_distribution_major_version == "8"
   changed_when: False
+  tags: 
+    - configure
 
 - name: Install Nagios plugins (RedHat)
   package:
@@ -13,6 +15,8 @@
   loop: "{{ icinga2_nagios_plugins_packages }}"
   when: >
     ansible_os_family == "RedHat"
+  tags: 
+    - configure
 
 - name: Install Nagios plugins (RedHat)
   package:
@@ -21,6 +25,8 @@
   loop: "{{ icinga2_nagios_plugins_packages }}"
   when: >
     ansible_os_family == "RedHat"
+  tags: 
+    - configure
 
 - name: Install Nagios plugins (Debian)
   package:
@@ -30,4 +36,6 @@
   when: >
     ansible_os_family == "Debian" or
     ansible_os_family == "Ubuntu"
+  tags: 
+    - configure
 ...

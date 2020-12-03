@@ -6,37 +6,50 @@
     - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
+  tags: configure
 
 - name: Check if Icinga2 has been already installed
   stat:
     path: "{{ icinga2_install_path }}/installed"
   register: icinga2_agent_install_chk
   ignore_errors: yes
+  tags: 
+    - configure
 
 - set_fact:
     icinga2_agent_installed: True
   when: icinga2_agent_install_chk.stat.exists
+  tags: 
+    - configure
 
 - set_fact:
     icinga2_agent_installed: False
   when: not icinga2_agent_install_chk.stat.exists
+  tags: 
+    - configure
 
 - name: Set facts when Icinga agent cannot be installed
   set_fact:
     icinga2_can_install_agent: False
   when: icinga2_can_install_agent is undefined
+  tags: 
+    - configure
 
 - name: Include tasks for Icinga2 agent installation
   include_tasks: icinga2_agent_install.yml
   when: >
     icinga2_can_install_agent and not
     icinga2_agent_installed
+  tags: 
+    - configure
 
 - name: Include tasks for Icinga2 agent registering
   include_tasks: icinga2_agent_register.yml
   when: >
     icinga2_can_install_agent and not
     icinga2_agent_installed
+  tags: 
+    - configure
 
 - name: Mark Icinga2 agent as installed
   file:
@@ -44,7 +57,11 @@
     state: touch
     mode: 000
   when: not icinga2_agent_installed
+  tags: 
+    - configure
 
 - name: Include tasks for Icinga2 agent registering
   include_tasks: icinga2_nagios_plugins.yml
+  tags: 
+    - configure
 ...
