@@ -1,6 +1,59 @@
 ---
-- debug:
-    msg: test
+- name: Check if plugin has been already installed
+  stat:
+    path: "{{ icinga2_nagios_plugins_install_dir }}/check_mysql_health"
+  register: icinga2_check_mysql_health_chk
+  tags:
+    - configure
+
+- name: Download check_mysql_health plugin
+  get_url:
+    url: "{{ icinga2_check_mysql_health_download_url }}"
+    dest: /tmp/
+  when: not icinga2_check_mysql_health_chk.stat.exists
+  tags:
+    - configure
+
+- name: Unarchive check_mysql_health archive
+  unarchive:
+    src: "/tmp/{{ icinga2_check_mysql_health_version }}.tar.gz"
+    dest: "/tmp/"
+    remote_src: yes
+  when: not icinga2_check_mysql_health_chk.stat.exists
+  tags:
+    - configure
+
+- name: Run ./configure for check_mysql_health
+  shell: "./configure"
+  args:
+    chdir: "/tmp/{{ icinga2_check_mysql_health_version }}"
+  when: not icinga2_check_mysql_health_chk.stat.exists
+  tags:
+    - configure
+
+- name: Run make for check_mysql_health
+  shell: "make"
+  args:
+    chdir: "/tmp/{{ icinga2_check_mysql_health_version }}"
+  when: not icinga2_check_mysql_health_chk.stat.exists
+  tags:
+    - configure
+
+- name: Run make install for check_mysql_health
+  shell: "make install"
+  args:
+    chdir: "/tmp/{{ icinga2_check_mysql_health_version }}"
+  when: not icinga2_check_mysql_health_chk.stat.exists
+  tags:
+    - configure
+
+- name: Copy over compiled check_mysql_health script
+  copy:
+    src: "/tmp/{{ icinga2_check_mysql_health_version }}/plugins-scripts/check_mysql_health"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/"
+    remote_src: yes
+    mode: 0755
+  when: not icinga2_check_mysql_health_chk.stat.exists
   tags:
     - configure
 ...
