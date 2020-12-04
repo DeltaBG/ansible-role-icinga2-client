@@ -64,4 +64,9 @@
   include_tasks: icinga2_nagios_plugins.yml
   tags: 
     - configure
+
+- name: Include tasks for installing additonal plugins
+  include_tasks: plugins/main.yml
+  tags:
+    - configure
 ...
