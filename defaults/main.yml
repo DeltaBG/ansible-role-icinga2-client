@@ -3,4 +3,8 @@ icinga2_install_path: /etc/icinga2
 icinga2_repo_key: https://packages.icinga.com/icinga.key
 icinga2_packages:
   - icinga2
+
+# Plugin-specific vars
+icinga2_check_mysql_health_version: check_mysql_health-2.2.2
+icinga2_check_mysql_health_download_url: https://labs.consol.de/assets/downloads/nagios/{{ icinga2_check_mysql_health_version }}.tar.gz
 ...
