@@ -4,4 +4,15 @@
   when: "'mysql_enabled' in icinga2_client_custom_vars"
   tags:
     - configure
+
+- name: Include tasks for installing check_smart
+  include_tasks: plugins/icinga2_plugin_check_smart.yml
+  when: "'smartctl_enabled' in icinga2_client_custom_vars"
+  tags:
+    - configure
+
+- name: Include tasks for installing iostats
+  include_tasks: plugins/icinga2_plugin_check_iostats.yml
+  tags:
+    - configure
 ...

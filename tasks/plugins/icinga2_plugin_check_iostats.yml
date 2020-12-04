@@ -1,0 +1,24 @@
+---
+- name: Check if check_iostats plugin has been already installed
+  stat:
+    path: "{{ icinga2_nagios_plugins_install_dir }}/check_iostats"
+  register: icinga2_check_iostats_chk
+  tags:
+    - configure
+
+- name: Download check_iostats plugin
+  get_url:
+    url: "{{ icinga2_check_iostats_download_url }}"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/check_iostats"
+    mode: 0755
+  when: not icinga2_check_iostats_chk.stat.exists
+  tags:
+    - configure
+
+- name: Install sysstat package
+  package:
+    name: sysstat
+    state: present
+  tags:
+    - configure
+...
