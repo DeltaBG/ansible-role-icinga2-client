@@ -1,0 +1,75 @@
+---
+- name: Check if check_rbl plugin has been already installed
+  stat:
+    path: "{{ icinga2_nagios_plugins_install_dir }}/check_rbl"
+  register: icinga2_check_rbl_chk
+  tags:
+    - configure
+
+- name: Download check_rbl plugin
+  get_url:
+    url: "{{ icinga2_check_rbl_download_url }}"
+    dest: "/tmp/"
+  when: not icinga2_check_rbl_chk.stat.exists
+  tags:
+    - configure
+
+- name: Unarchive check_rbl archive
+  unarchive:
+    src: "/tmp/check_rbl-{{ icinga2_check_rbl_version }}.tar.gz"
+    dest: "/tmp/"
+    remote_src: yes
+  when: not icinga2_check_rbl_chk.stat.exists
+  tags:
+    - configure
+
+- name: Install perl-Module-Install
+  package:
+    name: perl-Module-Install
+    state: present
+  tags:
+    - configure
+
+- name: Install perl-App-cpanminus
+  package:
+    name: perl-App-cpanminus
+    state: present
+  tags:
+    - configure
+
+- name: Install perl modules
+  cpanm:
+    name: "{{ item }}"
+  loop:
+      - Data::Validate::Domain
+      - Data::Validate::IP
+      - Readonly
+      - Monitoring::Plugin
+  tags:
+    - configure
+
+- name: Run perl Makefile.PL for check_rbl
+  shell: "perl Makefile.PL"
+  args:
+    chdir: "/tmp/check_rbl-{{ icinga2_check_rbl_version }}"
+  when: not icinga2_check_rbl_chk.stat.exists
+  tags:
+    - configure
+
+- name: Run make for check_rbl
+  shell: "make"
+  args:
+    chdir: "/tmp/check_rbl-{{ icinga2_check_rbl_version }}"
+  when: not icinga2_check_rbl_chk.stat.exists
+  tags:
+    - configure
+
+- name: Copy check_rbl to final destination
+  copy:
+    src: "/tmp/check_rbl-{{ icinga2_check_rbl_version }}/blib/script/check_rbl"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/check_rbl"
+    mode: 0755
+    remote_src: yes
+  tags:
+    - configure
+...

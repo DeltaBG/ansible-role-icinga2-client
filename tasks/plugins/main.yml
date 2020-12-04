@@ -15,4 +15,10 @@
   include_tasks: plugins/icinga2_plugin_check_iostats.yml
   tags:
     - configure
+
+- name: Include tasks for installing check_rbl
+  include_tasks: plugins/icinga2_plugin_check_rbl.yml
+  when: "'rbl_enabled' in icinga2_client_custom_vars"
+  tags:
+    - configure
 ...
