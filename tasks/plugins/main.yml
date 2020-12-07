@@ -26,13 +26,13 @@
 
 - name: Include tasks for installing check_mysql
   include_tasks: plugins/icinga2_plugin_check_mysql_health.yml
-  when: "'mysql_enabled' in icinga2_client_custom_vars"
+  when: "'mysql_enabled = true' in icinga2_client_custom_vars"
   tags:
     - configure
 
 - name: Include tasks for installing check_smart
   include_tasks: plugins/icinga2_plugin_check_smart.yml
-  when: "'smartctl_enabled' in icinga2_client_custom_vars"
+  when: "'smartctl_enabled = true' in icinga2_client_custom_vars"
   tags:
     - configure
 
@@ -43,13 +43,13 @@
 
 - name: Include tasks for installing check_rbl
   include_tasks: plugins/icinga2_plugin_check_rbl.yml
-  when: "'rbl_enabled' in icinga2_client_custom_vars"
+  when: "'rbl_enabled = true' in icinga2_client_custom_vars"
   tags:
     - configure
 
 - name: Include tasks for installing check_raid
   include_tasks: plugins/icinga2_plugin_check_raid.yml
-  when: "'raid_enabled' in icinga2_client_custom_vars"
+  when: "'raid_enabled = true' in icinga2_client_custom_vars"
   tags:
     - configure
 ...
