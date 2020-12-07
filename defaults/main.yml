@@ -20,6 +20,8 @@ icinga2_custom_plugin_commands: |
         description = "Select device DEVICE. Note: if the device is specified without this option, any further option will be ignored."
       }
     }
+
+    vars.smart_disk = "/dev/sda"
   }
 
 # Plugin-specific vars
