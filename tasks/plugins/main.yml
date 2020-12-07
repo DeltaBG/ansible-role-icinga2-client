@@ -24,20 +24,24 @@
   tags:
     - configure
 
-- name: Include tasks for installing check_mysql
-  include_tasks: plugins/icinga2_plugin_check_mysql_health.yml
-  when: "'mysql_enabled = true' in icinga2_client_custom_vars"
-  tags:
-    - configure
-
 - name: Include tasks for installing iostats
   include_tasks: plugins/icinga2_plugin_check_iostats.yml
   tags:
     - configure
 
+- name: Include tasks for installing check_mysql
+  include_tasks: plugins/icinga2_plugin_check_mysql_health.yml
+  when: >
+    "'mysql_enabled = true' in icinga2_client_custom_vars" or
+    "'vars.mysql_password' in icinga2_client_custom_vars"
+  tags:
+    - configure
+
 - name: Include tasks for installing check_rbl
   include_tasks: plugins/icinga2_plugin_check_rbl.yml
-  when: "'rbl_enabled = true' in icinga2_client_custom_vars"
+  when: >
+    "'rbl_enabled = true' in icinga2_client_custom_vars" or
+    "'rbl_hostname' in icinga2_client_custom_vars"
   tags:
     - configure
 
