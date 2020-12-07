@@ -1,4 +1,12 @@
 ---
+- name: Configure Icinga2 custom commands
+  include_tasks: commands_config/icinga2-commands-custom.yml
+  when: >
+    icinga2_custom_plugin_commands is defined
+  tags:
+    - configure
+    - configure_commands 
+
 - name: Include tasks for installing check_mysql
   include_tasks: plugins/icinga2_plugin_check_mysql_health.yml
   when: "'mysql_enabled' in icinga2_client_custom_vars"
@@ -19,6 +27,12 @@
 - name: Include tasks for installing check_rbl
   include_tasks: plugins/icinga2_plugin_check_rbl.yml
   when: "'rbl_enabled' in icinga2_client_custom_vars"
+  tags:
+    - configure
+
+- name: Include tasks for installing check_raid
+  include_tasks: plugins/icinga2_plugin_check_raid.yml
+  when: "'raid_enabled' in icinga2_client_custom_vars"
   tags:
     - configure
 ...
