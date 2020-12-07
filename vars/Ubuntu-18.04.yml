@@ -8,6 +8,7 @@ icinga2_nagios_plugins_packages:
 icinga2_nagios_plugins_install_dir: /usr/lib/nagios/plugins
 
 icinga2_package_prerequisites:
+  - smartmontools
   - perl
   - cpanminus
   - gcc
