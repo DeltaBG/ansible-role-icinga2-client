@@ -1,8 +1,15 @@
 ---
 icinga2_install_path: /etc/icinga2
+icinga2_shared_path: /usr/share/icinga2
 icinga2_repo_key: https://packages.icinga.com/icinga.key
 icinga2_packages:
   - icinga2
+
+# Custom commands
+icinga2_custom_plugin_commands: |
+  object CheckCommand "raid" { // Plugin name without 'check_' prefix
+    command = [ PluginDir + "/check_raid/check_raid.sh" ]
+  }
 
 # Plugin-specific vars
 ## mysql_check_health
@@ -13,4 +20,7 @@ icinga2_check_iostats_download_url: "https://raw.githubusercontent.com/dnsmichi/
 ## check_rbl
 icinga2_check_rbl_version: 1.5.6
 icinga2_check_rbl_download_url: https://github.com/matteocorti/check_rbl/archive/v{{ icinga2_check_rbl_version }}.tar.gz
+## check_raid
+icinga2_check_raid_version: 4.0.10
+icinga2_check_raid_download_url: https://github.com/glensc/nagios-plugin-check_raid/archive/4.0.10.tar.gz
 ...
