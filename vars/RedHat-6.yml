@@ -6,4 +6,11 @@ icinga2_nagios_plugins_packages:
   - nagios-plugins-all
 
 icinga2_nagios_plugins_install_dir: /usr/lib64/nagios/plugins
+
+icinga2_package_prerequisites:
+  - perl
+  - perl-App-cpanminus
+  - perl-Module-Install
+  - gcc
+  - make
 ...

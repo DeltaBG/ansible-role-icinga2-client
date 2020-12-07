@@ -6,4 +6,10 @@ icinga2_nagios_plugins_packages:
   - monitoring-plugins-basic
 
 icinga2_nagios_plugins_install_dir: /usr/lib/nagios/plugins
+
+icinga2_package_prerequisites:
+  - perl
+  - cpanminus
+  - gcc
+  - make
 ...

@@ -6,12 +6,6 @@ icinga2_repo_key: https://packages.icinga.com/icinga.key
 icinga2_packages:
   - icinga2
 
-icinga2_package_prerequisites:
-  - perl-App-cpanminus
-  - perl-Module-Install
-  - gcc
-  - make
-
 # Custom commands
 icinga2_custom_plugin_commands: |
   object CheckCommand "raid" { // Plugin name without 'check_' prefix
