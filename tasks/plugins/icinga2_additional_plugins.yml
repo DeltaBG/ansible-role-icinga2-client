@@ -1,0 +1,49 @@
+---
+- name: Check if additional plugins have been already installed
+  stat:
+    path: "{{ icinga2_nagios_plugins_install_dir }}/additional_plugins"
+  register: icinga2_additional_plugins_chk
+  tags:
+    - configure
+
+- name: Download additional plugins
+  get_url:
+    url: "{{ icinga2_additional_plugins_download_url }}"
+    dest: /tmp/
+  when: not icinga2_additional_plugins_chk.stat.exists
+  tags:
+    - configure
+
+- name: Unpack additional plugins
+  unarchive:
+    src: "/tmp/monitoring-plugins-{{ icinga2_additional_plugins_version }}.tar.gz"
+    dest: /tmp/
+    remote_src: yes
+  when: not icinga2_additional_plugins_chk.stat.exists
+  tags:
+    - configure
+
+- name: Run configure for additional plugins
+  shell: "./configure --libexecdir={{ icinga2_nagios_plugins_install_dir }}/additional_plugins/"
+  args:
+    chdir: "/tmp/monitoring-plugins-{{ icinga2_additional_plugins_version }}"
+  when: not icinga2_additional_plugins_chk.stat.exists
+  tags:
+    - configure
+
+- name: Run make for additional plugins
+  shell: make
+  args:
+    chdir: "/tmp/monitoring-plugins-{{ icinga2_additional_plugins_version }}"
+  when: not icinga2_additional_plugins_chk.stat.exists
+  tags:
+    - configure
+
+- name: Run make install for additional plugins
+  shell: make install
+  args:
+    chdir: "/tmp/monitoring-plugins-{{ icinga2_additional_plugins_version }}"
+  when: not icinga2_additional_plugins_chk.stat.exists
+  tags:
+    - configure 
+...

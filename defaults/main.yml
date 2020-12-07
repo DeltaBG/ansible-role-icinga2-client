@@ -11,8 +11,21 @@ icinga2_custom_plugin_commands: |
   object CheckCommand "raid" { // Plugin name without 'check_' prefix
     command = [ PluginDir + "/check_raid/check_raid.sh" ]
   }
+  object CheckCommand "ide_smart" { // Plugin name without 'check_' prefix
+    command = [ "sudo", PluginDir + "/additional_plugins/check_ide_smart" ]
+
+    arguments = {
+      "-d" = {
+        value = "$smart_disk$"
+        description = "Select device DEVICE. Note: if the device is specified without this option, any further option will be ignored."
+      }
+    }
+  }
 
 # Plugin-specific vars
+## Additional plugins
+icinga2_additional_plugins_version: 2.2
+icinga2_additional_plugins_download_url: https://www.monitoring-plugins.org/download/monitoring-plugins-{{ icinga2_additional_plugins_version }}.tar.gz
 ## mysql_check_health
 icinga2_check_mysql_health_version: check_mysql_health-2.2.2
 icinga2_check_mysql_health_download_url: https://labs.consol.de/assets/downloads/nagios/{{ icinga2_check_mysql_health_version }}.tar.gz
@@ -23,5 +36,5 @@ icinga2_check_rbl_version: 1.5.6
 icinga2_check_rbl_download_url: https://github.com/matteocorti/check_rbl/archive/v{{ icinga2_check_rbl_version }}.tar.gz
 ## check_raid
 icinga2_check_raid_version: 4.0.10
-icinga2_check_raid_download_url: https://github.com/glensc/nagios-plugin-check_raid/archive/4.0.10.tar.gz
+icinga2_check_raid_download_url: https://github.com/glensc/nagios-plugin-check_raid/archive/{{ icinga2_check_raid_version }}.tar.gz
 ...

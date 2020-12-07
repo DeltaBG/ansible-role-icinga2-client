@@ -30,12 +30,6 @@
   tags:
     - configure
 
-- name: Include tasks for installing check_smart
-  include_tasks: plugins/icinga2_plugin_check_smart.yml
-  when: "'smartctl_enabled = true' in icinga2_client_custom_vars"
-  tags:
-    - configure
-
 - name: Include tasks for installing iostats
   include_tasks: plugins/icinga2_plugin_check_iostats.yml
   tags:
@@ -50,6 +44,11 @@
 - name: Include tasks for installing check_raid
   include_tasks: plugins/icinga2_plugin_check_raid.yml
   when: "'raid_enabled = true' in icinga2_client_custom_vars"
+  tags:
+    - configure
+
+- name: Include tasks for installing additional monitoring_plugins
+  include_tasks: plugins/icinga2_additional_plugins.yml
   tags:
     - configure
 ...
