@@ -1,0 +1,59 @@
+---
+- name: Check if check_raid plugin has been already installed
+  stat:
+    path: "{{ icinga2_nagios_plugins_install_dir }}/check_raid/check_raid.sh"
+  register: icinga2_check_raid_chk
+  tags:
+    - configure
+
+- name: Download check_raid plugin
+  get_url:
+    url: "{{ icinga2_check_raid_download_url }}"
+    dest: "/tmp/"
+  when: not icinga2_check_raid_chk.stat.exists
+  tags: configure
+
+- name: Install perl-Module-Install
+  package:
+    name: perl-Module-Install
+    state: present
+  when: not icinga2_check_raid_chk.stat.exists
+  tags:
+    - configure
+
+- name: Install perl-App-cpanminus
+  package:
+    name: perl-App-cpanminus
+    state: present
+  when: not icinga2_check_raid_chk.stat.exists
+  tags:
+    - configure
+
+- name: Install perl modules
+  cpanm:
+    name: "{{ item }}"
+  loop:
+      - Monitoring::Plugin
+      - Module::Pluggable
+  when: not icinga2_check_raid_chk.stat.exists
+  tags:
+    - configure
+
+- name: Unpack check_raid plugin archive
+  unarchive:
+    src: "/tmp/nagios-plugin-check_raid-{{ icinga2_check_raid_version }}.tar.gz"
+    dest: /tmp/
+    remote_src: yes
+  when: not icinga2_check_raid_chk.stat.exists
+  tags:
+    - configure
+
+- name: Copy unarchived check_raid dir to final destination
+  copy:
+    src: "/tmp/nagios-plugin-check_raid-{{ icinga2_check_raid_version }}/"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/check_raid"
+    remote_src: yes
+  when: not icinga2_check_raid_chk.stat.exists
+  tags:
+    - configure
+...
