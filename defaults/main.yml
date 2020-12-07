@@ -1,6 +1,7 @@
 ---
 icinga2_install_path: /etc/icinga2
 icinga2_shared_path: /usr/share/icinga2
+icinga2_user: icinga
 icinga2_repo_key: https://packages.icinga.com/icinga.key
 icinga2_packages:
   - icinga2

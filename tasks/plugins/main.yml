@@ -15,6 +15,15 @@
   tags:
     - configure
 
+# TODO: Set only sudo access for plugins
+- name: Enable passwordless sudo for Icinga2 user
+  template:
+    src: icinga2-sudoers.j2
+    dest: "/etc/sudoers.d/{{ icinga2_user }}"
+    validate: /usr/sbin/visudo -cf %s
+  tags:
+    - configure
+
 - name: Include tasks for installing check_mysql
   include_tasks: plugins/icinga2_plugin_check_mysql_health.yml
   when: "'mysql_enabled' in icinga2_client_custom_vars"
