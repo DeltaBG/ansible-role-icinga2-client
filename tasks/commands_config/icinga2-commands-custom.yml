@@ -4,7 +4,7 @@
     block: "{{ icinga2_custom_plugin_commands }}"
     path: "{{ icinga2_shared_path }}/include/command-plugins.conf"
     state: present
-  notify: reload icinga2
+  notify: reload icinga
   tags:
     - configure
     - configure_commands
