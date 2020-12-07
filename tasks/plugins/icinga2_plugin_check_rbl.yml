@@ -23,22 +23,6 @@
   tags:
     - configure
 
-- name: Install perl-Module-Install
-  package:
-    name: perl-Module-Install
-    state: present
-  when: not icinga2_check_rbl_chk.stat.exists
-  tags:
-    - configure
-
-- name: Install perl-App-cpanminus
-  package:
-    name: perl-App-cpanminus
-    state: present
-  when: not icinga2_check_rbl_chk.stat.exists
-  tags:
-    - configure
-
 - name: Install perl modules
   cpanm:
     name: "{{ item }}"

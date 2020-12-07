@@ -7,6 +7,14 @@
     - configure
     - configure_commands 
 
+- name: Install plugin prerequisites
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ icinga2_package_prerequisites }}"
+  tags:
+    - configure
+
 - name: Include tasks for installing check_mysql
   include_tasks: plugins/icinga2_plugin_check_mysql_health.yml
   when: "'mysql_enabled' in icinga2_client_custom_vars"
