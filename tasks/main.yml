@@ -60,7 +60,7 @@
   tags: 
     - configure
 
-- name: Include tasks for Icinga2 agent registering
+- name: Include tasks for Icinga2 plugin installation
   include_tasks: icinga2_nagios_plugins.yml
   tags: 
     - configure
