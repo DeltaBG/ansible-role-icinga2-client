@@ -5,15 +5,7 @@
     icinga2_custom_plugin_commands is defined
   tags:
     - configure
-    - configure_commands 
-
-- name: Install plugin prerequisites
-  package:
-    name: "{{ item }}"
-    state: present
-  loop: "{{ icinga2_package_prerequisites }}"
-  tags:
-    - configure
+    - configure_commands
 
 # TODO: Set only sudo access for plugins
 - name: Enable passwordless sudo for Icinga2 user
@@ -22,6 +14,11 @@
     dest: "/etc/sudoers.d/{{ icinga2_user }}"
     validate: /usr/sbin/visudo -cf %s
   tags:
+    - configure
+
+- name: Include tasks for Icinga2 plugin prerequisites
+  include_tasks: plugins/icinga2_nagios_plugins_prerequisites.yml
+  tags: 
     - configure
 
 - name: Include tasks for installing iostats

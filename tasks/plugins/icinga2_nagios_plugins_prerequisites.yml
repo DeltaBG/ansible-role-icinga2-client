@@ -1,4 +1,12 @@
 ---
+- name: Install plugin prerequisites
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ icinga2_package_prerequisites }}"
+  tags:
+    - configure
+
 - name: Enable PowerTools repo
   shell: dnf config-manager --set-enabled PowerTools
   when: >
