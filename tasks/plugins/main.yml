@@ -44,6 +44,13 @@
   tags:
     - configure
 
+- name: Include tasks for installing check_smart
+  include_tasks: plugins/icinga2_plugin_check_smart.yml
+  when: "'smart_devices' in icinga2_client_vars"
+  tags:
+    - configure
+    - configure_check_smart
+
 - name: Include tasks for installing additional monitoring_plugins
   include_tasks: plugins/icinga2_additional_plugins.yml
   tags:

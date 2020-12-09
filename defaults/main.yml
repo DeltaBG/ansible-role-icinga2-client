@@ -23,6 +23,23 @@ icinga2_custom_plugin_commands: |
 
     vars.smart_disk = "/dev/sda"
   }
+  object CheckCommand "smart_pl" { // Plugin name without 'check_' prefix
+    command = [ "sudo", PluginDir + "/check_smart" ]
+    
+    arguments = {
+      "-d" = {
+        value = "$smart_disk$"
+        description = "a physical block device to be SMART monitored"
+      }
+      "-i" = {
+        value = "$smart_type$"
+        description = "device's interface type (auto|ata|scsi|nvme|3ware,N|areca,N|hpt,L/M/N|cciss,N|megaraid,N)"
+      }
+    }
+
+    vars.smart_disk = "/dev/sda"
+    vars.smart_type = "sat"
+  }
 
 # Plugin-specific vars
 ## Additional plugins
@@ -39,4 +56,7 @@ icinga2_check_rbl_download_url: https://github.com/matteocorti/check_rbl/archive
 ## check_raid
 icinga2_check_raid_version: 4.0.10
 icinga2_check_raid_download_url: https://github.com/glensc/nagios-plugin-check_raid/archive/{{ icinga2_check_raid_version }}.tar.gz
+## check_smart
+icinga2_check_smart_version: 6.8.0
+icinga2_check_smart_download_url: https://github.com/Napsty/check_smart/archive/{{ icinga2_check_smart_version }}.tar.gz
 ...

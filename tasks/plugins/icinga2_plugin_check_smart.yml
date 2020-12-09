@@ -1,0 +1,39 @@
+---
+- name: Check if check_smart plugin has been already installed
+  stat:
+    path: "{{ icinga2_nagios_plugins_install_dir }}/check_smart"
+  register: icinga2_check_smart_chk
+  tags:
+    - configure
+    - configure_check_smart
+
+- name: Download check_smart plugin
+  get_url:
+    url: "{{ icinga2_check_smart_download_url }}"
+    dest: "/tmp/"
+  when: not icinga2_check_smart_chk.stat.exists
+  tags:
+    - configure
+    - configure_check_smart
+
+- name: Unpack check_smart plugin archive
+  unarchive:
+    src: "/tmp/check_smart-{{ icinga2_check_smart_version }}.tar.gz"
+    dest: "/tmp/"
+    remote_src: yes
+  when: not icinga2_check_smart_chk.stat.exists
+  tags:
+    - configure
+    - configure_check_smart
+
+- name: Copy plugin to final destination
+  copy:
+    src: "/tmp/check_smart-{{ icinga2_check_smart_version }}/check_smart.pl"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/check_smart"
+    remote_src: yes
+    mode: 0755
+  when: not icinga2_check_smart_chk.stat.exists
+  tags:
+    - configure
+    - configure_check_smart
+...
