@@ -18,6 +18,9 @@
 
 - name: Include tasks for Icinga2 plugin prerequisites
   include_tasks: plugins/icinga2_nagios_plugins_prerequisites.yml
+  when: >
+    icinga2_can_install_agent and not
+    icinga2_agent_installed
   tags: 
     - configure
 
