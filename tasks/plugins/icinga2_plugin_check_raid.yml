@@ -13,7 +13,7 @@
   when: not icinga2_check_raid_chk.stat.exists
   tags: configure
 
-- name: Install perl modules
+- name: Install check_raid perl modules
   cpanm:
     name: "{{ item }}"
   loop:
