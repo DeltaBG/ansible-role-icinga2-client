@@ -17,8 +17,17 @@
   cpanm:
     name: "{{ item }}"
   loop:
-      - Monitoring::Plugin
-      - Module::Pluggable
+    - Class::Accessor
+    - Monitoring::Plugin
+    - Module::Pluggable
+  when: not icinga2_check_raid_chk.stat.exists
+  tags:
+    - configure
+
+- name: Install check_raid Module::Pluggable perl module
+  cpanm:
+    name: Module::Pluggable
+    version: 5.2
   when: not icinga2_check_raid_chk.stat.exists
   tags:
     - configure
