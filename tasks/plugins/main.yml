@@ -37,7 +37,9 @@
 
 - name: Include tasks for installing check_rbl
   include_tasks: plugins/icinga2_plugin_check_rbl.yml
-  when: "'rbl_hostname' in icinga2_client_vars"
+  when: >
+    ansible_facts.all_ipv4_addresses is defined and 
+    ansible_facts.all_ipv4_addresses|length>0
   tags:
     - configure
 
