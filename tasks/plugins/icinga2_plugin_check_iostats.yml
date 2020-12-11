@@ -36,8 +36,7 @@
     name: sysstat
     state: present
   when: >
-    not icinga2_check_iostat_chk.stat.exists and not
-    icinga2_check_iostat_chk.stats.exists
+    not icinga2_check_iostat_chk.stat.exists
   tags:
     - configure
 
@@ -46,8 +45,7 @@
     name: bc
     state: present
   when: >
-    not icinga2_check_iostat_chk.stat.exists and not
-    icinga2_check_iostat_chk.stats.exists
+    not icinga2_check_iostat_chk.stat.exists
   tags:
     - configure
 ...
