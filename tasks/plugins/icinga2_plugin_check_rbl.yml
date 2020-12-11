@@ -27,10 +27,13 @@
   cpanm:
     name: "{{ item }}"
   loop:
-      - Data::Validate::Domain
-      - Data::Validate::IP
-      - Readonly
-      - Monitoring::Plugin
+    - Module::Install
+    - Net::IP
+    - Net::DNS
+    - Data::Validate::Domain
+    - Data::Validate::IP
+    - Readonly
+    - Monitoring::Plugin
   when: not icinga2_check_rbl_chk.stat.exists
   tags:
     - configure
