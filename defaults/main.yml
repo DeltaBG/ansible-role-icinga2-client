@@ -50,6 +50,7 @@ icinga2_check_mysql_health_version: check_mysql_health-2.2.2
 icinga2_check_mysql_health_download_url: https://labs.consol.de/assets/downloads/nagios/{{ icinga2_check_mysql_health_version }}.tar.gz
 ## mysql_iostats
 icinga2_check_iostats_download_url: "https://raw.githubusercontent.com/dnsmichi/icinga-plugins/master/scripts/check_iostats"
+icinga2_check_iostat_download_url: "https://raw.githubusercontent.com/dnsmichi/icinga-plugins/master/scripts/check_iostat"
 ## check_rbl
 icinga2_check_rbl_version: 1.5.6
 icinga2_check_rbl_download_url: https://github.com/matteocorti/check_rbl/archive/v{{ icinga2_check_rbl_version }}.tar.gz

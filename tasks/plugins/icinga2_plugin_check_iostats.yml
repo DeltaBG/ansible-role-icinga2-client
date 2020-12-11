@@ -6,6 +6,13 @@
   tags:
     - configure
 
+- name: Check if check_iostat plugin has been already installed
+  stat:
+    path: "{{ icinga2_nagios_plugins_install_dir }}/check_iostat"
+  register: icinga2_check_iostat_chk
+  tags:
+    - configure
+
 - name: Download check_iostats plugin
   get_url:
     url: "{{ icinga2_check_iostats_download_url }}"
@@ -15,10 +22,32 @@
   tags:
     - configure
 
+- name: Download check_iostat plugin
+  get_url:
+    url: "{{ icinga2_check_iostat_download_url }}"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/check_iostat"
+    mode: 0755
+  when: not icinga2_check_iostat_chk.stat.exists
+  tags:
+    - configure
+
 - name: Install sysstat package
   package:
     name: sysstat
     state: present
+  when: >
+    not icinga2_check_iostat_chk.stat.exists and not
+    icinga2_check_iostat_chk.stats.exists
+  tags:
+    - configure
+
+- name: Install bc package
+  package:
+    name: bc
+    state: present
+  when: >
+    not icinga2_check_iostat_chk.stat.exists and not
+    icinga2_check_iostat_chk.stats.exists
   tags:
     - configure
 ...
