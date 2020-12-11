@@ -1,0 +1,18 @@
+---
+- name: Install monitoring package prerequisites
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ icinga2_monitoring_packages }}"
+  tags:
+    - configure
+
+- name: Create monitoring user
+  mysql_user:
+    name: "{{ icinga2_mysql_monitoring_user }}"
+    password: "{{ icinga2_mysql_monitoring_password }}"
+    host: localhost
+    priv: '*.*:SELECT'
+  tags:
+    - configure
+...

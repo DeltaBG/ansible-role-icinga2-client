@@ -29,9 +29,21 @@
   tags:
     - configure
 
+- name: Include tasks for creating MySQL monitoring user
+  include_tasks: plugins/icinga2_mysql_monitoring.yml
+  when: >
+    ansible_facts.mysql is defined and
+    ansible_facts.mysql|length>0 and not
+    "vars.mysql_disabled = true" in icinga2_client_vars
+  tags:
+    - configure
+
 - name: Include tasks for installing check_mysql
   include_tasks: plugins/icinga2_plugin_check_mysql_health.yml
-  when: "'mysql_password' in icinga2_client_vars"
+  when: >
+    ansible_facts.mysql is defined and
+    ansible_facts.mysql|length>0 and not
+    "vars.mysql_disabled = true" in icinga2_client_vars
   tags:
     - configure
 
