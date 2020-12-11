@@ -39,7 +39,8 @@
   include_tasks: plugins/icinga2_plugin_check_rbl.yml
   when: >
     ansible_facts.all_ipv4_addresses is defined and 
-    ansible_facts.all_ipv4_addresses|length>0
+    ansible_facts.all_ipv4_addresses|length>0 and
+    ansible_facts.all_ipv4_addresses|ansible.netcommon.ipaddr('public')|length>0
   tags:
     - configure
 
