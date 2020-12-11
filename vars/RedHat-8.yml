@@ -15,4 +15,7 @@ icinga2_package_prerequisites:
   - perl-Module-Install
   - gcc
   - make
+
+icinga2_monitoring_packages:
+  - python3-PyMySQL
 ...

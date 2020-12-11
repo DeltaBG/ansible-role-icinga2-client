@@ -4,6 +4,7 @@ icinga2_repo: deb http://packages.icinga.com/ubuntu icinga-bionic main
 
 icinga2_nagios_plugins_packages:
   - monitoring-plugins-basic
+  - monitoring-plugins-standard
 
 icinga2_nagios_plugins_install_dir: /usr/lib/nagios/plugins
 
@@ -13,4 +14,7 @@ icinga2_package_prerequisites:
   - cpanminus
   - gcc
   - make
+
+icinga2_monitoring_packages:
+  - MySQL-python
 ...
