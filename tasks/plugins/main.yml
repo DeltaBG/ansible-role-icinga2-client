@@ -43,13 +43,17 @@
 
 - name: Include tasks for installing check_raid
   include_tasks: plugins/icinga2_plugin_check_raid.yml
-  when: "'raid_enabled = true' in icinga2_client_vars"
+  when: >
+    ansible_facts.raid is defined and
+    ansible_facts.raid|length>0
   tags:
     - configure
 
 - name: Include tasks for installing check_smart
   include_tasks: plugins/icinga2_plugin_check_smart.yml
-  when: "'smart_devices' in icinga2_client_vars"
+  when: >
+    ansible_facts.smartctl is defined and
+    ansible_facts.smartctl|length>0
   tags:
     - configure
     - configure_check_smart
