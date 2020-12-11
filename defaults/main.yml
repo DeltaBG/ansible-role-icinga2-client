@@ -41,6 +41,9 @@ icinga2_custom_plugin_commands: |
     vars.smart_type = "sat"
   }
 
+icinga2_mysql_monitoring_user: icinga2_monitoring
+icinga2_mysql_monitoring_password: icinga2_monitoring_password
+
 # Plugin-specific vars
 ## Additional plugins
 icinga2_additional_plugins_version: 2.2
