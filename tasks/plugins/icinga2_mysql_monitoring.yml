@@ -12,7 +12,7 @@
     name: "{{ icinga2_mysql_monitoring_user }}"
     password: "{{ icinga2_mysql_monitoring_password }}"
     host: localhost
-    priv: '*.*:SELECT'
+    priv: '*.*:SELECT,REPLICATION CLIENT'
   tags:
     - configure
 ...
