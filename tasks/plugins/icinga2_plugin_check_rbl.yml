@@ -19,6 +19,7 @@
     src: "/tmp/check_rbl-{{ icinga2_check_rbl_version }}.tar.gz"
     dest: "/tmp/"
     remote_src: yes
+    mode: 0755
   when: not icinga2_check_rbl_chk.stat.exists
   tags:
     - configure
@@ -58,8 +59,8 @@
   copy:
     src: "/tmp/check_rbl-{{ icinga2_check_rbl_version }}/blib/script/check_rbl"
     dest: "{{ icinga2_nagios_plugins_install_dir }}/check_rbl"
-    mode: 0755
     remote_src: yes
+    mode: 0755
   when: not icinga2_check_rbl_chk.stat.exists
   tags:
     - configure

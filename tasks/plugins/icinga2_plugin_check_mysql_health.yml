@@ -19,6 +19,7 @@
     src: "/tmp/{{ icinga2_check_mysql_health_version }}.tar.gz"
     dest: "/tmp/"
     remote_src: yes
+    mode: 0755
   when: not icinga2_check_mysql_health_chk.stat.exists
   tags:
     - configure

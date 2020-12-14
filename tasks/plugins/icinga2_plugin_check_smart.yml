@@ -21,6 +21,7 @@
     src: "/tmp/check_smart-{{ icinga2_check_smart_version }}.tar.gz"
     dest: "/tmp/"
     remote_src: yes
+    mode: 0755
   when: not icinga2_check_smart_chk.stat.exists
   tags:
     - configure

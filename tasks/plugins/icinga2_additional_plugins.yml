@@ -45,5 +45,5 @@
     chdir: "/tmp/monitoring-plugins-{{ icinga2_additional_plugins_version }}"
   when: not icinga2_additional_plugins_chk.stat.exists
   tags:
-    - configure 
+    - configure
 ...

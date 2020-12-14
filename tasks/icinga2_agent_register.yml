@@ -4,7 +4,7 @@
     path: /etc/hosts
     line: "{{ icinga2_master_host_address }}  {{ icinga2_master_host }}"
   notify: restart icinga
-  tags: 
+  tags:
     - configure
 
 - name: Ensure /var/lib/icinga2/certs/ is present (Debian specific)
@@ -13,14 +13,15 @@
     state: directory
     owner: nagios
     group: nagios
+    mode: 0755
   when: "ansible_os_family == 'Debian'"
-  tags: 
+  tags:
     - configure
 
 - name: Generate Icinga2 client key
   command: "icinga2 pki new-cert --cn {{ inventory_hostname }} --key /var/lib/icinga2/certs/{{ inventory_hostname }}.key --cert /var/lib/icinga2/certs/{{ inventory_hostname }}.crt"
   notify: restart icinga
-  tags: 
+  tags:
     - configure
 
 - name: Generate Icinga2 TicketSalt from the master host
@@ -38,18 +39,18 @@
     body_format: json
     body: '{ "cn": "{{ inventory_hostname }}" }'
   register: icinga2_api_response
-  tags: 
+  tags:
     - configure
 
 - name: Save the Icinga2 TicketSalt
   command: "icinga2 pki save-cert --key /var/lib/icinga2/certs/{{ inventory_hostname }}.key --cert /var/lib/icinga2/certs/{{ inventory_hostname }}.crt --trustedcert /var/lib/icinga2/certs/trusted-parent.crt --host {{ icinga2_master_host }}"
   notify: restart icinga
-  tags: 
+  tags:
     - configure
 
 - name: Register the Icinga2 client with the TicketSalt
   command: "icinga2 node setup --ticket {{ icinga2_api_response.json.results[0]['ticket'] }} --cn {{ inventory_hostname }} --endpoint {{ icinga2_master_host }} --zone {{ inventory_hostname }} --parent_zone master --parent_host {{ icinga2_master_host }} --trustedcert /var/lib/icinga2/certs/trusted-parent.crt --accept-commands --accept-config --disable-confd"
   notify: restart icinga
-  tags: 
+  tags:
     - configure
 ...

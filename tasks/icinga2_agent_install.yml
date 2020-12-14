@@ -4,7 +4,7 @@
     key: "{{ icinga2_repo_key }}"
     state: present
   when: "ansible_os_family == 'RedHat'"
-  tags: 
+  tags:
     - configure
 
 - name: Install Icinga2 repo (RHEL)
@@ -12,7 +12,7 @@
     name: "{{ icinga2_repo }}"
     state: present
   when: "ansible_os_family == 'RedHat'"
-  tags: 
+  tags:
     - configure
 
 - name: Import Icinga2 repo key (Debian, Ubuntu)
@@ -20,7 +20,7 @@
     url: "{{ icinga2_repo_key }}"
     state: present
   when: "ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'"
-  tags: 
+  tags:
     - configure
 
 - name: Install Icinga2 repo (Debian, Ubuntu)
@@ -28,7 +28,7 @@
     repo: "{{ icinga2_repo }}"
     state: present
   when: "ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'"
-  tags: 
+  tags:
     - configure
 
 - name: Install Debian 9 specific backports repo
@@ -36,7 +36,7 @@
     repo: deb http://ftp.debian.org/debian stretch-backports main
     state: present
   when: "ansible_os_family == 'Debian' and ansible_distribution_major_version == '9'"
-  tags: 
+  tags:
     - configure
 
 - name: Install Icinga2 packages
@@ -44,7 +44,7 @@
     name: "{{ item }}"
     state: present
   loop: "{{ icinga2_packages }}"
-  tags: 
+  tags:
     - configure
 
 - name: Enable and start Icinga2 service
@@ -52,6 +52,6 @@
     name: icinga2
     enabled: yes
     state: started
-  tags: 
+  tags:
     - configure
 ...

@@ -37,6 +37,7 @@
     src: "/tmp/nagios-plugin-check_raid-{{ icinga2_check_raid_version }}.tar.gz"
     dest: /tmp/
     remote_src: yes
+    mode: 0755
   when: not icinga2_check_raid_chk.stat.exists
   tags:
     - configure
@@ -46,6 +47,7 @@
     src: "/tmp/nagios-plugin-check_raid-{{ icinga2_check_raid_version }}/"
     dest: "{{ icinga2_nagios_plugins_install_dir }}/check_raid"
     remote_src: yes
+    mode: 0755
   when: not icinga2_check_raid_chk.stat.exists
   tags:
     - configure
