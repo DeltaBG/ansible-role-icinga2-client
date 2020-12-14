@@ -16,13 +16,13 @@
   tags:
     - configure
 
-- set_fact:
+- set_fact: # noqa 502
     icinga2_agent_installed: True
   when: icinga2_agent_install_chk.stat.exists
   tags:
     - configure
 
-- set_fact:
+- set_fact: # noqa 502
     icinga2_agent_installed: False
   when: not icinga2_agent_install_chk.stat.exists
   tags:

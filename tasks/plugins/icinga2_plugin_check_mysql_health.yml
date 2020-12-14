@@ -24,7 +24,7 @@
   tags:
     - configure
 
-- name: Run ./configure for check_mysql_health
+- name: Run ./configure for check_mysql_health # noqa 305
   shell: "./configure"
   args:
     chdir: "/tmp/{{ icinga2_check_mysql_health_version }}"
@@ -32,7 +32,7 @@
   tags:
     - configure
 
-- name: Run make for check_mysql_health
+- name: Run make for check_mysql_health # noqa 305
   shell: "make"
   args:
     chdir: "/tmp/{{ icinga2_check_mysql_health_version }}"
@@ -40,7 +40,7 @@
   tags:
     - configure
 
-- name: Run make install for check_mysql_health
+- name: Run make install for check_mysql_health # noqa 305
   shell: "make install"
   args:
     chdir: "/tmp/{{ icinga2_check_mysql_health_version }}"

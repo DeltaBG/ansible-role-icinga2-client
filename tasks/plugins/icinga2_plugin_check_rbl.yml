@@ -39,7 +39,7 @@
   tags:
     - configure
 
-- name: Run perl Makefile.PL for check_rbl
+- name: Run perl Makefile.PL for check_rbl # noqa 305
   shell: "perl Makefile.PL"
   args:
     chdir: "/tmp/check_rbl-{{ icinga2_check_rbl_version }}"
@@ -47,7 +47,7 @@
   tags:
     - configure
 
-- name: Run make for check_rbl
+- name: Run make for check_rbl # noqa 305
   shell: "make"
   args:
     chdir: "/tmp/check_rbl-{{ icinga2_check_rbl_version }}"

@@ -7,7 +7,7 @@
   tags:
     - configure
 
-- name: Enable PowerTools repo
+- name: Enable PowerTools repo # noqa 305
   shell: dnf config-manager --set-enabled PowerTools
   when: >
     ansible_os_family == "RedHat" and

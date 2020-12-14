@@ -19,7 +19,7 @@
     - configure
 
 - name: Generate Icinga2 client key
-  command: "icinga2 pki new-cert --cn {{ inventory_hostname }} --key /var/lib/icinga2/certs/{{ inventory_hostname }}.key --cert /var/lib/icinga2/certs/{{ inventory_hostname }}.crt"
+  command: "icinga2 pki new-cert --cn {{ inventory_hostname }} --key /var/lib/icinga2/certs/{{ inventory_hostname }}.key --cert /var/lib/icinga2/certs/{{ inventory_hostname }}.crt" # noqa 204
   notify: restart icinga
   tags:
     - configure
@@ -43,13 +43,13 @@
     - configure
 
 - name: Save the Icinga2 TicketSalt
-  command: "icinga2 pki save-cert --key /var/lib/icinga2/certs/{{ inventory_hostname }}.key --cert /var/lib/icinga2/certs/{{ inventory_hostname }}.crt --trustedcert /var/lib/icinga2/certs/trusted-parent.crt --host {{ icinga2_master_host }}"
+  command: "icinga2 pki save-cert --key /var/lib/icinga2/certs/{{ inventory_hostname }}.key --cert /var/lib/icinga2/certs/{{ inventory_hostname }}.crt --trustedcert /var/lib/icinga2/certs/trusted-parent.crt --host {{ icinga2_master_host }}" # noqa 204
   notify: restart icinga
   tags:
     - configure
 
 - name: Register the Icinga2 client with the TicketSalt
-  command: "icinga2 node setup --ticket {{ icinga2_api_response.json.results[0]['ticket'] }} --cn {{ inventory_hostname }} --endpoint {{ icinga2_master_host }} --zone {{ inventory_hostname }} --parent_zone master --parent_host {{ icinga2_master_host }} --trustedcert /var/lib/icinga2/certs/trusted-parent.crt --accept-commands --accept-config --disable-confd"
+  command: "icinga2 node setup --ticket {{ icinga2_api_response.json.results[0]['ticket'] }} --cn {{ inventory_hostname }} --endpoint {{ icinga2_master_host }} --zone {{ inventory_hostname }} --parent_zone master --parent_host {{ icinga2_master_host }} --trustedcert /var/lib/icinga2/certs/trusted-parent.crt --accept-commands --accept-config --disable-confd" # noqa 204
   notify: restart icinga
   tags:
     - configure
