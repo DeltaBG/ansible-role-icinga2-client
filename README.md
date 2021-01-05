@@ -1,8 +1,5 @@
-# Ansible role for installing Icinga2 client
+# Ansible role for installing and configuring Icinga2 client
 
 ## Requirements
 
-This role depends on the extra plugin from `Galaxy deltabg.extended_facts`.
-Run `ansible-galaxy install -r DeltaBG.icinga2/requirements.yml` before using this role.
-
-This role is WIP
+In order to use this role, please refer to the complete documentation of the deltabg.icinga2 role [here](https://github.com/DeltaBG/ansible-role-icinga2).
