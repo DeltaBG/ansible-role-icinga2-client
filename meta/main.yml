@@ -1,0 +1,30 @@
+---
+dependencies:
+  - deltabg.icinga2
+
+galaxy_info:
+  author: Valentin Dzhorov (vdzhorov)
+  description: Install and configure Icinga2 client(agent)
+  company: "Delta.BG"
+  license: "license (MIT)"
+  role_name: icinga2
+  min_ansible_version: 2.5
+  platforms:
+    - name: EL
+      versions:
+        - 6
+        - 7
+        - 8
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+        - focal
+  galaxy_tags:
+    - icinga2
+    - monitoring
+...
